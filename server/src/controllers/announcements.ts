@@ -1,11 +1,5 @@
 import { Request, Response } from "express";
 import Announcement from "../models/Announcement";
-import { IUser } from "../models/User";
-
-// Extended Request interface with user property
-interface AuthRequest extends Request {
-  user?: IUser;
-}
 
 // @desc    Get all announcements
 // @route   GET /api/announcements
@@ -72,7 +66,7 @@ export const getAnnouncement = async (
 // @route   POST /api/announcements
 // @access  Private
 export const createAnnouncement = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<void> => {
   try {
@@ -108,7 +102,7 @@ export const createAnnouncement = async (
 // @route   PUT /api/announcements/:id
 // @access  Private
 export const updateAnnouncement = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<void> => {
   try {
@@ -173,7 +167,7 @@ export const updateAnnouncement = async (
 // @route   DELETE /api/announcements/:id
 // @access  Private
 export const deleteAnnouncement = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<void> => {
   try {

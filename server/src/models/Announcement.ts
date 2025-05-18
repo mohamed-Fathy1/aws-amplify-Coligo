@@ -1,5 +1,4 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { AuthorSchema, IAuthor } from "./Author";
 
 export interface IAnnouncement extends Document {
   title: string;

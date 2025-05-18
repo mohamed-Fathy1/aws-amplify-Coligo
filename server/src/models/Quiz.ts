@@ -71,7 +71,6 @@ const QuizSchema: Schema = new Schema(
   }
 );
 
-// Calculate total points before saving
 QuizSchema.pre("save", function (next) {
   if (this.questions && Array.isArray(this.questions)) {
     this.totalPoints = this.questions.reduce(

@@ -1,11 +1,5 @@
 import { Request, Response } from "express";
 import Quiz from "../models/Quiz";
-import { IUser } from "../models/User";
-
-// Extended Request interface with user property
-interface AuthRequest extends Request {
-  user?: IUser;
-}
 
 // @desc    Get all quizzes
 // @route   GET /api/quizzes
@@ -67,7 +61,7 @@ export const getQuiz = async (req: Request, res: Response): Promise<void> => {
 // @route   POST /api/quizzes
 // @access  Private (Admin & Teachers only)
 export const createQuiz = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<void> => {
   try {
@@ -108,7 +102,7 @@ export const createQuiz = async (
 // @route   PUT /api/quizzes/:id
 // @access  Private (Admin & Teachers only)
 export const updateQuiz = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<void> => {
   try {
@@ -162,7 +156,7 @@ export const updateQuiz = async (
 // @route   DELETE /api/quizzes/:id
 // @access  Private (Admin & Teachers only)
 export const deleteQuiz = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<void> => {
   try {
