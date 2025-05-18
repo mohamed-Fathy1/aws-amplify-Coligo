@@ -88,7 +88,6 @@ function Home() {
           <ColigoText>Coligo</ColigoText>
 
           <Button
-            variant="contained"
             size="large"
             onClick={handleLogin}
             disabled={loading}
