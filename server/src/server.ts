@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./config/db";
 import announcementsRoutes from "./routes/announcements";
+import quizRoutes from "./routes/quizzes";
 
 const PORT = 5001;
 const NODE_ENV = "development";
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(cors({}));
 
 app.use("/api/announcements", announcementsRoutes);
+app.use("/api/quizzes", quizRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello World" });
