@@ -17,37 +17,8 @@ interface DueItemsListProps {
   loading: boolean;
 }
 
-// Sample quizzes data (for mockup)
-const sampleQuizzes = [
-  {
-    _id: "1",
-    title: "Unit 2 quiz",
-    course: "Physics 02",
-    topic: "Unit2: Motion and Forces",
-    dueDate: "2023-09-20T09:00:00Z",
-    questions: [],
-    totalPoints: 20,
-    createdAt: "2023-09-10T12:00:00Z",
-    updatedAt: "2023-09-10T12:00:00Z",
-  },
-  {
-    _id: "2",
-    title: "12-12 Assignment",
-    course: "Arabic #12",
-    topic: "الوحدة - العربية لغتي",
-    dueDate: "2023-09-20T09:00:00Z",
-    questions: [],
-    totalPoints: 15,
-    createdAt: "2023-09-11T11:30:00Z",
-    updatedAt: "2023-09-11T11:30:00Z",
-  },
-];
-
 const DueItemsList: React.FC<DueItemsListProps> = ({ quizzes, loading }) => {
   const { t } = useTranslation();
-
-  // Use sample data for mockup if no quizzes
-  const displayQuizzes = quizzes.length > 0 ? quizzes : sampleQuizzes;
 
   // Format date to readable format
   const formatDate = (dateString: string) => {
@@ -77,7 +48,11 @@ const DueItemsList: React.FC<DueItemsListProps> = ({ quizzes, loading }) => {
         <Link
           href="#"
           underline="none"
-          sx={{ fontWeight: "medium", color: "primary.light" }}
+          sx={{
+            fontWeight: "bold",
+            color: "primary.light",
+            fontSize: "1.2rem",
+          }}
         >
           {t("dashboard.all")}
         </Link>
@@ -101,7 +76,7 @@ const DueItemsList: React.FC<DueItemsListProps> = ({ quizzes, loading }) => {
             </Box>
           ))
         : // Quizzes list
-          displayQuizzes.map((quiz, index) => (
+          quizzes.map((quiz, index) => (
             <Box key={quiz._id} sx={{ mb: 4 }}>
               <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                 <Chip

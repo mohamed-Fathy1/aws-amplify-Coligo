@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Container } from "@mui/material";
 import type { AppDispatch, RootState } from "../store";
@@ -19,6 +19,14 @@ const Dashboard = () => {
     (state: RootState) => state.quizzes
   );
 
+  // State for mobile sidebar
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Toggle sidebar handler
+  const handleToggleSidebar = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   useEffect(() => {
     dispatch(fetchAnnouncements());
     dispatch(fetchQuizzes());
@@ -27,7 +35,7 @@ const Dashboard = () => {
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "#f5f5f5" }}>
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
 
       {/* Main content */}
       <Box
@@ -38,7 +46,7 @@ const Dashboard = () => {
         }}
       >
         {/* Header */}
-        <Header />
+        <Header onToggleSidebar={handleToggleSidebar} />
 
         {/* Content */}
         <Container

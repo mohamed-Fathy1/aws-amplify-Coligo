@@ -102,7 +102,7 @@ const AnnouncementList: React.FC<AnnouncementListProps> = ({ loading }) => {
         boxShadow: "none",
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.4 }}>
         <Typography
           variant="h5"
           fontWeight="bold"
@@ -114,9 +114,9 @@ const AnnouncementList: React.FC<AnnouncementListProps> = ({ loading }) => {
           href="#"
           underline="none"
           sx={{
-            fontWeight: "medium",
-            color: "#6abf69",
-            fontSize: "1rem",
+            fontWeight: "bold",
+            color: "primary.light",
+            fontSize: "1.2rem",
           }}
         >
           {t("dashboard.all")}
