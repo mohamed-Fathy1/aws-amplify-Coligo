@@ -24,6 +24,7 @@ const AnnouncementSchema: Schema = new Schema(
     },
     author: {
       type: AuthorSchema,
+      ref: "User",
       required: true,
     },
     course: {
