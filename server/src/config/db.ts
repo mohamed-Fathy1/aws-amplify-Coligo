@@ -10,9 +10,6 @@ const connectDB = async (): Promise<void> => {
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error: any) {
     console.error(`Error connecting to MongoDB: ${error.message}`);
-    console.log(
-      "Continuing without database connection for demonstration purposes"
-    );
   }
 };
 

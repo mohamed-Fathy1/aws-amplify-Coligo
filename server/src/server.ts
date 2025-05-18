@@ -1,8 +1,11 @@
 import express from "express";
 import cors from "cors";
+import connectDB from "./config/db";
 
 const PORT = 5001;
 const NODE_ENV = "development";
+
+connectDB();
 
 const app = express();
 
