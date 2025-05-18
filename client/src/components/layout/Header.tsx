@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import {
   AppBar,
@@ -9,12 +9,20 @@ import {
   Badge,
   Avatar,
   IconButton,
+  Menu,
+  MenuItem,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import EmailIcon from "@mui/icons-material/Email";
+import LogoutIcon from "@mui/icons-material/Logout";
+import MenuIcon from "@mui/icons-material/Menu";
 import { styled, alpha } from "@mui/material/styles";
-import type { RootState } from "../../store";
+import type { RootState, AppDispatch } from "../../store";
+import { useState } from "react";
+import { logout } from "../../store/slices/authSlice";
 
 // Custom styled search component
 const Search = styled("div")(({ theme }) => ({
@@ -62,9 +70,36 @@ const GradientIconStyle = {
   fill: "url(#gradientColor)",
 };
 
-const Header = () => {
+interface HeaderProps {
+  onToggleSidebar?: () => void;
+}
+
+const Header = ({ onToggleSidebar }: HeaderProps) => {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout())
+      .unwrap()
+      .catch((error: unknown) => {
+        console.error("Logout failed:", error);
+      });
+    handleMenuClose();
+  };
+
+  const open = Boolean(anchorEl);
 
   return (
     <AppBar
@@ -78,6 +113,18 @@ const Header = () => {
       }}
     >
       <Toolbar sx={{ minHeight: "64px !important" }}>
+        {isMobile && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={onToggleSidebar}
+            edge="start"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon style={GradientIconStyle} />
+          </IconButton>
+        )}
+
         <Typography
           variant="h6"
           component="h2"
@@ -93,7 +140,11 @@ const Header = () => {
         </Typography>
 
         <Search
-          sx={{ border: "1px solid rgb(139, 139, 139)", borderRadius: 5 }}
+          sx={{
+            border: "1px solid rgb(139, 139, 139)",
+            borderRadius: 5,
+            display: { xs: isMobile ? "none" : "block", sm: "block" },
+          }}
         >
           <SearchIconWrapper>
             <SearchIcon />
@@ -104,7 +155,13 @@ const Header = () => {
           />
         </Search>
 
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            marginLeft: { xs: "auto", sm: "0" },
+          }}
+        >
           {/* SVG Gradient Definition */}
           <svg width="0" height="0">
             <linearGradient
@@ -150,11 +207,47 @@ const Header = () => {
             </Badge>
           </IconButton>
 
-          <Avatar
-            alt={user?.name || "Talia"}
-            src="/avatar.png"
-            sx={{ width: 36, height: 36 }}
-          />
+          <IconButton
+            onClick={handleMenuOpen}
+            size="small"
+            sx={{ ml: 0.5 }}
+            aria-controls={open ? "account-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+          >
+            <Avatar
+              alt={user?.name || "Talia"}
+              src="/avatar.png"
+              sx={{ width: 36, height: 36 }}
+            />
+          </IconButton>
+
+          <Menu
+            id="account-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleMenuClose}
+            onClick={handleMenuClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: "visible",
+                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.15))",
+                mt: 1.5,
+                "& .MuiMenuItem-root": {
+                  px: 2.5,
+                  py: 1,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            <MenuItem onClick={handleLogout}>
+              <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
+              {t("common.logout", "Logout")}
+            </MenuItem>
+          </Menu>
         </Box>
       </Toolbar>
     </AppBar>
