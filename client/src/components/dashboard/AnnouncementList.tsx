@@ -173,18 +173,18 @@ const AnnouncementList: React.FC<AnnouncementListProps> = ({ loading }) => {
                 {announcement.category}
               </Avatar>
 
-              <Box sx={{ width: "30%", pr: 2 }}>
+              <Box sx={{ width: "30%", borderRight: "1px solid #e0e0e0" }}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="600"
-                  sx={{ fontSize: "1rem", color: "#333", mb: 0.5 }}
+                  sx={{ fontSize: ".9rem", color: "#333", mb: 0.5 }}
                 >
                   {announcement.author.name}
                 </Typography>
                 <Typography
                   variant="body2"
                   sx={{
-                    fontSize: "0.9rem",
+                    fontSize: "0.7rem",
                     color: "#9e9e9e",
                     fontWeight: "400",
                   }}
@@ -193,7 +193,7 @@ const AnnouncementList: React.FC<AnnouncementListProps> = ({ loading }) => {
                 </Typography>
               </Box>
 
-              <Box sx={{ flexGrow: 1 }}>
+              <Box sx={{ flexGrow: 1, pl: 2 }}>
                 <Typography
                   variant="body1"
                   sx={{

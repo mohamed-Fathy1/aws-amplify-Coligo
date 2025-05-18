@@ -117,22 +117,17 @@ const DueItemsList: React.FC<DueItemsListProps> = ({ quizzes, loading }) => {
                 sx={{
                   mt: 2,
                   py: 1.2,
-                  fontWeight: "medium",
+                  fontWeight: "bold",
                   borderRadius: 1.5,
-                  background:
-                    index === 0
-                      ? "linear-gradient(90deg, #00577E 0%, #066989 100%)"
-                      : "linear-gradient(90deg, #00CCC6 0%, #4DFFF9 100%)",
+                  background: "transparent",
+                  border: "2px solid #00CCC6",
+                  color: "#00CCC6",
                   boxShadow: "none",
                   "&:hover": {
                     background:
-                      index === 0
-                        ? "linear-gradient(90deg, #00415F 0%, #055F7F 100%)"
-                        : "linear-gradient(90deg, #00B5B0 0%, #3AEBE5 100%)",
-                    boxShadow:
-                      index === 0
-                        ? "0px 4px 8px rgba(0, 87, 126, 0.3)"
-                        : "0px 4px 8px rgba(0, 204, 198, 0.3)",
+                      "linear-gradient(90deg, #00B5B0 0%, #3AEBE5 100%)",
+                    boxShadow: "0px 4px 8px rgba(0, 204, 198, 0.3)",
+                    color: "white",
                   },
                 }}
               >

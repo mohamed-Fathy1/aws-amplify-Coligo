@@ -89,16 +89,13 @@ const ExamsBanner = () => {
             width: { xs: "100%", md: "40%" },
           }}
         >
-          <Box
-            component="img"
-            src="https://via.placeholder.com/400x300/e0f7fa/075aa4?text=Exam+Preparation"
-            alt="Exams illustration"
-            sx={{
-              maxWidth: "100%",
-              height: "auto",
-              borderRadius: 2,
-            }}
-          />
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
+            <img
+              src="/images/exam-illustration.svg"
+              alt="Exam preparation"
+              style={{ maxWidth: "300px" }}
+            />
+          </Box>
         </Box>
       </Box>
     </Paper>

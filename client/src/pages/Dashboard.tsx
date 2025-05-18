@@ -79,7 +79,7 @@ const Dashboard = () => {
               </Box>
 
               {/* What's Due */}
-              <Box sx={{ flex: { md: 2 }, width: { xs: "100%", md: "auto" } }}>
+              <Box sx={{ flex: { md: 1 }, width: { xs: "100%", md: "auto" } }}>
                 <DueItemsList quizzes={quizzes} loading={quizzesLoading} />
               </Box>
             </Box>
