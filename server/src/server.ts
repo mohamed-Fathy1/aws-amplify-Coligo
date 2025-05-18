@@ -17,7 +17,14 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({}));
+// Configure CORS to allow requests from any origin during development
+app.use(
+  cors({
+    origin:
+      NODE_ENV === "production" ? "https://yourproductiondomain.com" : "*",
+    credentials: true,
+  })
+);
 
 if (NODE_ENV === "development") {
   app.use(morgan("dev"));
