@@ -1,0 +1,42 @@
+{
+  "app": {
+    "title": "كوليجو",
+    "copyright": "© {{year}} كوليجو. جميع الحقوق محفوظة."
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج"
+  },
+  "sidebar": {
+    "dashboard": "لوحة التحكم",
+    "schedule": "الجدول",
+    "courses": "الدورات",
+    "gradebook": "سجل الدرجات",
+    "performance": "الأداء",
+    "announcement": "الإعلانات"
+  },
+  "dashboard": {
+    "welcome": "مرحبًا {{name}}،",
+    "exams_time": "وقت الامتحانات",
+    "exams_description": "ها نحن. هل أنت مستعد للمواجهة؟ لا تقلق، لقد أعددنا بعض النصائح لتكون مستعدًا لامتحاناتك.",
+    "quote": "\"لا شيء يحدث حتى يتحرك شيء\" - ألبرت أينشتاين",
+    "view_exams_tips": "عرض نصائح الامتحانات",
+    "announcements": "الإعلانات",
+    "all": "الكل",
+    "whats_due": "ما هو مستحق"
+  },
+  "quiz": {
+    "unit_quiz": "اختبار الوحدة {{unit}}",
+    "course": "الدورة:",
+    "topic": "الموضوع:",
+    "due": "تاريخ الاستحقاق:",
+    "start_quiz": "بدء الاختبار"
+  },
+  "assignment": {
+    "assignment": "المهمة {{number}}",
+    "course": "الدورة:",
+    "topic": "الموضوع:",
+    "due": "تاريخ الاستحقاق:",
+    "solve_assignment": "حل المهمة"
+  }
+}

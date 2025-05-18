@@ -1,0 +1,42 @@
+{
+  "app": {
+    "title": "Coligo",
+    "copyright": "© {{year}} Coligo. All rights reserved."
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "schedule": "Schedule",
+    "courses": "Courses",
+    "gradebook": "Gradebook",
+    "performance": "Performance",
+    "announcement": "Announcement"
+  },
+  "dashboard": {
+    "welcome": "Welcome {{name}},",
+    "exams_time": "EXAMS TIME",
+    "exams_description": "Here we are. Are you ready to fight? Don't worry, we prepared some tips to be ready for your exams.",
+    "quote": "\"Nothing happens until something moves\" - Albert Einstein",
+    "view_exams_tips": "View exams tips",
+    "announcements": "Announcements",
+    "all": "All",
+    "whats_due": "What's due"
+  },
+  "quiz": {
+    "unit_quiz": "Unit {{unit}} quiz",
+    "course": "Course:",
+    "topic": "Topic:",
+    "due": "Due to:",
+    "start_quiz": "Start Quiz"
+  },
+  "assignment": {
+    "assignment": "{{number}} Assignment",
+    "course": "Course:",
+    "topic": "Topic:",
+    "due": "Due to:",
+    "solve_assignment": "Solve Assignment"
+  }
+}
