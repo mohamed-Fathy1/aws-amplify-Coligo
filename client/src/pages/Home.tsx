@@ -1,5 +1,11 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { styled, keyframes } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { login } from "../store/slices/authSlice";
+import type { AppDispatch, RootState } from "../store";
 
 // Create a subtle animation for the Coligo text
 const float = keyframes`
@@ -25,6 +31,25 @@ const ColigoText = styled(Typography)(({ theme }) => ({
 }));
 
 function Home() {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const { isAuthenticated, loading } = useSelector(
+    (state: RootState) => state.auth
+  );
+
+  // Redirect to dashboard if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
+
+  // Handle login button click
+  const handleLogin = async () => {
+    await dispatch(login());
+  };
+
   return (
     <Box
       sx={{
@@ -57,7 +82,7 @@ function Home() {
               letterSpacing: "1px",
             }}
           >
-            Welcome to
+            {t("app.title")}
           </Typography>
 
           <ColigoText>Coligo</ColigoText>
@@ -65,7 +90,8 @@ function Home() {
           <Button
             variant="contained"
             size="large"
-            onClick={() => {}}
+            onClick={handleLogin}
+            disabled={loading}
             sx={{
               minWidth: 200,
               py: 1.5,
@@ -81,7 +107,7 @@ function Home() {
               boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)",
             }}
           >
-            Login
+            {loading ? "Logging in..." : t("auth.login")}
           </Button>
         </Box>
       </Container>
@@ -94,7 +120,7 @@ function Home() {
           bottom: "20px",
         }}
       >
-        &copy; {new Date().getFullYear()} Coligo. All rights reserved.
+        {t("app.copyright", { year: new Date().getFullYear() })}
       </Typography>
     </Box>
   );
