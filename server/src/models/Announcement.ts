@@ -4,7 +4,7 @@ import { AuthorSchema, IAuthor } from "./Author";
 export interface IAnnouncement extends Document {
   title: string;
   content: string;
-  author: IAuthor;
+  author: mongoose.Types.ObjectId;
   course: string;
   createdAt: Date;
   updatedAt: Date;
@@ -23,7 +23,7 @@ const AnnouncementSchema: Schema = new Schema(
       required: [true, "Please add content"],
     },
     author: {
-      type: AuthorSchema,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
