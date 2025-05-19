@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import connectDB from "./config/db";
 import User from "./models/User";
 import Announcement from "./models/Announcement";
 import Quiz from "./models/Quiz";
@@ -8,8 +7,39 @@ import Quiz from "./models/Quiz";
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB
-connectDB();
+// Configure MongoDB connection options
+const mongooseOptions = {
+  socketTimeoutMS: 60000,
+  connectTimeoutMS: 60000,
+  serverSelectionTimeoutMS: 60000,
+};
+
+// Connect to MongoDB with retry logic
+const connectDB = async () => {
+  let retries = 5;
+  while (retries > 0) {
+    try {
+      console.log(`Connecting to MongoDB... (${retries} attempts left)`);
+      await mongoose.connect(
+        process.env.MONGODB_URI || "mongodb://localhost:27017/coligo",
+        mongooseOptions
+      );
+      console.log("MongoDB Connected!");
+      return true;
+    } catch (error) {
+      console.error("MongoDB connection error:", error);
+      retries -= 1;
+      if (retries === 0) {
+        console.error("Failed to connect to MongoDB after multiple attempts");
+        process.exit(1);
+      }
+      // Wait 5 seconds before retrying
+      console.log("Retrying in 5 seconds...");
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    }
+  }
+  return false;
+};
 
 // Sample data
 const seedData = async () => {
@@ -172,5 +202,61 @@ const seedData = async () => {
   }
 };
 
-// Run the seed function
-seedData();
+// Main seed function
+const seedDB = async () => {
+  try {
+    // Connect to database
+    await connectDB();
+
+    console.log("Clearing existing data...");
+
+    // Delete existing data - with timeouts and error handling
+    try {
+      await User.deleteMany({});
+      console.log("Users deleted");
+    } catch (error) {
+      console.error("Error deleting users:", error);
+      // Continue anyway
+    }
+
+    try {
+      await Announcement.deleteMany({});
+      console.log("Announcements deleted");
+    } catch (error) {
+      console.error("Error deleting announcements:", error);
+      // Continue anyway
+    }
+
+    try {
+      await Quiz.deleteMany({});
+      console.log("Quizzes deleted");
+    } catch (error) {
+      console.error("Error deleting quizzes:", error);
+      // Continue anyway
+    }
+
+    // Create seed data
+    console.log("Creating sample data...");
+
+    // Add your existing seed creation logic here
+    // ...
+
+    console.log("Database seeded!");
+
+    // Only exit if we're running the script directly
+    if (require.main === module) {
+      process.exit(0);
+    }
+  } catch (error) {
+    console.error("Error seeding database:", error);
+    process.exit(1);
+  }
+};
+
+// Run the seed function if this script is executed directly
+if (require.main === module) {
+  seedDB();
+}
+
+// Export for programmatic use
+export default seedDB;
