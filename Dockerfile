@@ -24,9 +24,9 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Build client
+# Build client with production-only build
 WORKDIR /app/client
-RUN npm run build
+RUN npm run build:prod
 
 # Build server
 WORKDIR /app/server
@@ -34,6 +34,7 @@ RUN npm run build
 
 # Set environment variables
 ENV NODE_ENV=production
+ENV SKIP_TESTS=true
 
 # Expose the server port
 EXPOSE 5000
