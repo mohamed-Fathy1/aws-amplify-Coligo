@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+# Give MongoDB time to initialize properly
+echo "Waiting for MongoDB to be ready (3 seconds)..."
+sleep 3
+
 # Navigate to server directory
 cd /app/server
 
@@ -11,8 +15,8 @@ if [ -z "$MONGODB_URI" ]; then
   exit 1
 fi
 
-# Wait for MongoDB to be ready
-echo "Waiting for MongoDB to be ready..."
+# Additional waiting period to ensure MongoDB is ready
+echo "Waiting for MongoDB to be fully ready..."
 sleep 5
 
 # Run seed script with proper error handling
