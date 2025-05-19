@@ -17,13 +17,35 @@ const mongooseOptions = {
 // Connect to MongoDB with retry logic
 const connectDB = async () => {
   let retries = 5;
+
+  // Debug environment variable (mask credentials)
+  const dbUri = process.env.MONGODB_URI || "";
+  const maskedUri = dbUri
+    ? dbUri.replace(/:\/\/(.*):(.*)@/, "://**username**:**password**@")
+    : "Not set!";
+
+  console.log(`MONGODB_URI: ${maskedUri}`);
+  console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+
+  // If not set at all, try to connect to Railway's MongoDB
+  const connectionString =
+    process.env.MONGODB_URI ||
+    process.env.DATABASE_URL ||
+    (process.env.RAILWAY_ENVIRONMENT
+      ? "mongodb://mongodb:27017/coligo"
+      : "mongodb://localhost:27017/coligo");
+
+  console.log(
+    `Using connection string: ${connectionString.substring(
+      0,
+      connectionString.indexOf("@") > 0 ? connectionString.indexOf("@") : 10
+    )}...`
+  );
+
   while (retries > 0) {
     try {
       console.log(`Connecting to MongoDB... (${retries} attempts left)`);
-      await mongoose.connect(
-        process.env.MONGODB_URI || "mongodb://localhost:27017/coligo",
-        mongooseOptions
-      );
+      await mongoose.connect(connectionString, mongooseOptions);
       console.log("MongoDB Connected!");
       return true;
     } catch (error) {
