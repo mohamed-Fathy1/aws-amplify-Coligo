@@ -39,6 +39,6 @@ ENV SKIP_TESTS=true
 # Expose the server port
 EXPOSE 5000
 
-# Start the server
+# Start the server (using shell form instead of exec form)
 WORKDIR /app/server
-CMD npm run seed && npm start 
+CMD ["sh", "-c", "npm run seed && npm start"] 
