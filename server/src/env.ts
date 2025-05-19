@@ -9,7 +9,8 @@ const getMongoDB = () => {
   const uri =
     process.env.MONGODB_URI ||
     process.env.MONGO_URI ||
-    process.env.DATABASE_URL;
+    process.env.DATABASE_URL ||
+    process.env.MONGO_URL;
 
   // If we have a URI, use it
   if (uri) {
@@ -17,14 +18,8 @@ const getMongoDB = () => {
     return uri;
   }
 
-  // Otherwise try to connect to Railway's MongoDB or fallback to localhost
-  if (process.env.RAILWAY_ENVIRONMENT) {
-    console.log("Using Railway MongoDB connection");
-    return "mongodb://mongodb:27017/coligo";
-  }
-
   // Default for local development
-  console.log("Using local MongoDB connection");
+  console.log("Missing MongoDB connection string! Using localhost fallback.");
   return "mongodb://localhost:27017/coligo";
 };
 
