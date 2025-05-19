@@ -1,0 +1,43 @@
+FROM node:20.0.0
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY client/package*.json ./client/
+COPY server/package*.json ./server/
+
+# Install root dependencies (if any)
+RUN npm install
+
+# Install client dependencies
+WORKDIR /app/client
+RUN npm install
+
+# Install server dependencies
+WORKDIR /app/server
+RUN npm install
+
+# Return to root
+WORKDIR /app
+
+# Copy project files
+COPY . .
+
+# Build client
+WORKDIR /app/client
+RUN npm run build
+
+# Build server
+WORKDIR /app/server
+RUN npm run build
+
+# Set environment variables
+ENV NODE_ENV=production
+
+# Expose the server port
+EXPOSE 5000
+
+# Start the server
+WORKDIR /app/server
+CMD npm run seed && npm start 
