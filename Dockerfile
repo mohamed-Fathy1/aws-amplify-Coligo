@@ -24,6 +24,9 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
+# Make the start script executable
+RUN chmod +x start.sh
+
 # Build client with production-only build
 WORKDIR /app/client
 RUN npm run build:prod
@@ -39,6 +42,6 @@ ENV SKIP_TESTS=true
 # Expose the server port
 EXPOSE 5000
 
-# Start the server (using shell form instead of exec form)
-WORKDIR /app/server
-CMD ["sh", "-c", "npm run seed && npm start"] 
+# Start the server using the shell script
+WORKDIR /app
+CMD ["./start.sh"] 
