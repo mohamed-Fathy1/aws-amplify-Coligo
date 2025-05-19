@@ -45,6 +45,11 @@ function Home() {
     }
   }, [isAuthenticated, navigate]);
 
+  // If authenticated, don't render anything
+  if (isAuthenticated) {
+    return null;
+  }
+
   // Handle login button click
   const handleLogin = async () => {
     await dispatch(login());

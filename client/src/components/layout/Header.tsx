@@ -116,10 +116,12 @@ const Header = ({ onToggleSidebar }: HeaderProps) => {
         {isMobile && (
           <IconButton
             color="inherit"
-            aria-label="open drawer"
+            aria-label="menu"
             onClick={onToggleSidebar}
             edge="start"
             sx={{ mr: 2 }}
+            data-testid="toggle-sidebar"
+            name="toggle"
           >
             <MenuIcon style={GradientIconStyle} />
           </IconButton>

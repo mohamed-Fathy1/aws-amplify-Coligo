@@ -8,12 +8,13 @@ interface Announcement {
   author: {
     _id: string;
     name: string;
-    role: string;
-    subject: string;
+    role?: string;
+    subject?: string;
   };
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
   category?: string;
+  course?: string;
 }
 
 interface AnnouncementListProps {
@@ -21,75 +22,11 @@ interface AnnouncementListProps {
   loading: boolean;
 }
 
-// Sample data to match the image exactly
-const sampleAnnouncements: Announcement[] = [
-  {
-    _id: "3",
-    title: "Morning Announcement",
-    content:
-      "Goooooooooood morning, Warriors! That get-ready-for-the-day call is heard each morning by 850 students at Goodwyn Junior High School in Tawamov, Egypt...",
-    author: {
-      _id: "a3",
-      name: "School management",
-      role: "admin",
-      subject: "Management",
-    },
-    createdAt: "2023-05-12T08:00:00Z",
-    updatedAt: "2023-05-12T08:00:00Z",
-    category: "S",
-  },
-  {
-    _id: "4",
-    title: "Field Trip",
-    content:
-      "Helloppp. Can't wait our upcoming trip on the next weekend. The trip will be to Dreampark and Pyramids! To book your seat please contact your class teacher.",
-    author: {
-      _id: "a4",
-      name: "Events Manager",
-      role: "admin",
-      subject: "Events",
-    },
-    createdAt: "2023-05-11T14:45:00Z",
-    updatedAt: "2023-05-11T14:45:00Z",
-    category: "E",
-  },
-  {
-    _id: "2",
-    title: "Unit 2 Quiz",
-    content:
-      "Hello my students, I want to announce that the next quiz will be within 3 days and will cover the whole unit 2: Add and subtract numbers. Study hard! Good luck!",
-    author: {
-      _id: "a2",
-      name: "Mrs.Salma Ahmed",
-      role: "teacher",
-      subject: "Physics 02",
-    },
-    createdAt: "2023-05-14T09:15:00Z",
-    updatedAt: "2023-05-14T09:15:00Z",
-    category: "M",
-  },
-  {
-    _id: "1",
-    title: "Exam Preparation",
-    content:
-      "Hi my friends! I just want you ready to our exams and focus on remaining assignments to gain more grades, good luck my warriors! 😊",
-    author: {
-      _id: "a1",
-      name: "Mr.Ahmed Mostafa",
-      role: "teacher",
-      subject: "Math 101",
-    },
-    createdAt: "2023-05-15T10:30:00Z",
-    updatedAt: "2023-05-15T10:30:00Z",
-    category: "M",
-  },
-];
-
-const AnnouncementList: React.FC<AnnouncementListProps> = ({ loading }) => {
+const AnnouncementList: React.FC<AnnouncementListProps> = ({
+  announcements,
+  loading,
+}) => {
   const { t } = useTranslation();
-
-  // Use sample data to match the image exactly
-  const displayAnnouncements = sampleAnnouncements;
 
   return (
     <Paper
@@ -139,7 +76,11 @@ const AnnouncementList: React.FC<AnnouncementListProps> = ({ loading }) => {
       {loading
         ? // Loading skeleton
           Array.from(new Array(3)).map((_, index) => (
-            <Box key={index} sx={{ mb: 3, display: "flex", gap: 2 }}>
+            <Box
+              key={index}
+              sx={{ mb: 3, display: "flex", gap: 2 }}
+              data-testid="skeleton"
+            >
               <Skeleton variant="circular" width={60} height={60} />
               <Box sx={{ flexGrow: 1 }}>
                 <Skeleton variant="text" width="40%" />
@@ -148,7 +89,7 @@ const AnnouncementList: React.FC<AnnouncementListProps> = ({ loading }) => {
             </Box>
           ))
         : // Announcements list
-          displayAnnouncements.map((announcement) => (
+          announcements.map((announcement) => (
             <Box
               key={announcement._id}
               sx={{
@@ -170,10 +111,10 @@ const AnnouncementList: React.FC<AnnouncementListProps> = ({ loading }) => {
                   mr: 3,
                 }}
               >
-                {announcement.category}
+                {announcement.category || announcement.title.charAt(0)}
               </Avatar>
 
-              <Box sx={{ width: "30%", borderRight: "1px solid #e0e0e0" }}>
+              <Box sx={{ flexGrow: 1, borderRight: "1px solid #e0e0e0" }}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="600"
@@ -193,7 +134,7 @@ const AnnouncementList: React.FC<AnnouncementListProps> = ({ loading }) => {
                 </Typography>
               </Box>
 
-              <Box sx={{ flexGrow: 1, pl: 2 }}>
+              <Box sx={{ flexGrow: 2, pl: 2, maxWidth: "73%" }}>
                 <Typography
                   variant="body1"
                   sx={{

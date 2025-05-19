@@ -63,7 +63,7 @@ const DueItemsList: React.FC<DueItemsListProps> = ({ quizzes, loading }) => {
       {loading
         ? // Loading skeleton
           Array.from(new Array(2)).map((_, index) => (
-            <Box key={index} sx={{ mb: 4 }}>
+            <Box key={index} sx={{ mb: 4 }} data-testid="skeleton">
               <Skeleton variant="text" width="50%" height={30} />
               <Skeleton variant="text" width="70%" />
               <Skeleton variant="text" width="40%" />
