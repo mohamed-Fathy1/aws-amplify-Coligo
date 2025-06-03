@@ -1,19 +1,30 @@
 version: 1
 backend:
   phases:
+    preBuild:
+      commands:
+        - nvm install 20
+        - nvm use 20
+        - node -v
     build:
       commands:
         - npm ci --cache .npm --prefer-offline
-        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+        - npx amplify pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:
+    preBuild:
+      commands:
+        - nvm install 20
+        - nvm use 20
+        - node -v
     build:
       commands:
+        - npm ci --cache .npm --prefer-offline
         - npm run build
   artifacts:
     baseDirectory: dist
     files:
-      - '**/*'
+      - "**/*"
   cache:
     paths:
       - .npm/**/*
